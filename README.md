@@ -58,6 +58,10 @@ IO.binwrite('Move.bin', writer.hsdarc.pack('c*'))
 
 ## Changelog
 
+### V0.1.1
+
+- `Feh::HSDArcWriter#string` now accepts a nil string and writes a null pointer
+
 ### V0.1.0
 
 - Initial release

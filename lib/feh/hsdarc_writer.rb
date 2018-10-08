@@ -76,12 +76,13 @@ module Feh
     end
 
     # Creates a pointer to an XOR-encrypted string.
-    # @param str [String] UTF-8 string
+    # @param str [String, nil] UTF-8 string, writes a null pointer instead if
+    #   equal to **nil**
     # @param xor [Array<Integer>] optional XOR cipher to use, writes unencrypted
     #   strings by default
     # @return [HSDArcWriter] self
     def string(str, xor = [0])
-      ptr {|blk| blk.xor_str(str, xor)}
+      str.nil? ? nullptr : ptr {|blk| blk.xor_str(str, xor)}
     end
 
     # Writes a null pointer.
