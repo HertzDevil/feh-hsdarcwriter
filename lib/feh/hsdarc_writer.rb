@@ -114,8 +114,8 @@ module Feh
       bin, reloc = hsdarc_impl
       total_size = 0x20 + bin.size + reloc.size * 8
       header = [total_size, reloc.empty? ? 0 : bin.size, reloc.size, 0, 0, 1, 0, 0]
-        .pack('i*').bytes
-      header + bin + reloc.pack('j*').bytes
+        .pack('l<*').bytes
+      header + bin + reloc.pack('q<*').bytes
     end
 
     # Aligns the data pointer.
@@ -140,7 +140,7 @@ module Feh
     end
 
     def self.replace_ptr(arr, pos, x)
-      x += arr[pos, 8].pack('c*').unpack('j').first
+      x += arr[pos, 8].pack('c*').unpack('q<').first
       arr[pos, 8] = Array.new(8) {|i| (x >> (i * 8)) & 0xFF}
       nil
     end
